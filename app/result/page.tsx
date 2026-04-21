@@ -32,131 +32,134 @@ function ResultContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col pb-10" style={{ background: "#f5f4ed" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#f5f4ed" }}>
       {/* Hero */}
-      <div className="flex flex-col items-center px-6 pt-10 pb-8">
+      <div className="flex flex-col items-center px-6 pt-12 pb-8">
         <div
-          className="w-40 h-40 flex items-center justify-center mb-6 scale-in"
+          className="w-44 h-44 flex items-center justify-center mb-7 scale-in"
           style={{
             background: "#faf9f5",
             borderRadius: "2rem",
-            boxShadow: "0px 0px 0px 1px #f0eee6, rgba(0,0,0,0.05) 0px 4px 24px",
+            boxShadow: "0px 0px 0px 1px #f0eee6, rgba(0,0,0,0.06) 0px 8px 32px",
           }}
         >
-          <PixelCat type={catImage} size={120} />
+          <PixelCat type={catImage} size={128} />
         </div>
 
-        <p style={{ color: "#87867f", fontSize: "0.8rem", marginBottom: "0.5rem" }}>你的猫格是</p>
+        <p style={{ color: "#87867f", fontSize: "0.82rem", marginBottom: "0.6rem" }}>你的猫格是</p>
         <h1
-          className="text-center font-black mb-1"
-          style={{ fontSize: "1.6rem", color: "#141413", lineHeight: 1.25 }}
+          className="text-center font-black mb-2"
+          style={{ fontSize: "1.65rem", color: "#141413", lineHeight: 1.25 }}
         >
           {cat.name}
         </h1>
-        <p style={{ color: "#87867f", fontSize: "0.85rem" }}>{cat.subtitle}</p>
+        <p style={{ color: "#87867f", fontSize: "0.88rem" }}>{cat.subtitle}</p>
       </div>
 
-      {/* Quote */}
-      <div className="mx-5 mb-5">
+      {/* Main content — padded container */}
+      <div className="px-5 flex flex-col gap-5 pb-10">
+
+        {/* Quote */}
         <div
-          className="px-5 py-4 rounded-2xl"
+          className="px-6 py-5 rounded-2xl"
           style={{
             background: "#faf9f5",
             border: "1px solid #f0eee6",
           }}
         >
-          <p style={{ color: "#141413", fontSize: "0.9rem", lineHeight: 1.7 }}>
-            <span style={{ color: "#b0aea5", fontFamily: "Georgia, serif", fontSize: "1.1rem" }}>&ldquo;</span>
+          <p style={{ color: "#141413", fontSize: "0.92rem", lineHeight: 1.8 }}>
+            <span style={{ color: "#b0aea5", fontFamily: "Georgia, serif", fontSize: "1.2rem" }}>&ldquo;</span>
             {cat.quote}
-            <span style={{ color: "#b0aea5", fontFamily: "Georgia, serif", fontSize: "1.1rem" }}>&rdquo;</span>
+            <span style={{ color: "#b0aea5", fontFamily: "Georgia, serif", fontSize: "1.2rem" }}>&rdquo;</span>
           </p>
         </div>
-      </div>
 
-      {/* Tags */}
-      <div className="mx-5 mb-5">
-        <p
-          className="mb-3 font-bold uppercase"
-          style={{ color: "#87867f", fontSize: "0.7rem", letterSpacing: "0.12em" }}
-        >
-          性格标签
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {cat.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="font-medium"
-              style={{
-                padding: "0.4rem 0.9rem",
-                background: "#e8e6dc",
-                borderRadius: "99px",
-                fontSize: "0.82rem",
-                color: "#4d4c48",
-              }}
-            >
-              {tag}
-            </span>
-          ))}
+        {/* Tags */}
+        <div>
+          <p
+            className="mb-3 font-bold uppercase"
+            style={{ color: "#87867f", fontSize: "0.72rem", letterSpacing: "0.12em" }}
+          >
+            性格标签
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {cat.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="font-medium"
+                style={{
+                  padding: "0.45rem 1rem",
+                  background: "#e8e6dc",
+                  borderRadius: "99px",
+                  fontSize: "0.84rem",
+                  color: "#4d4c48",
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Divider */}
-      <div className="mx-5 mb-5" style={{ borderTop: "1px solid #e8e6dc" }} />
+        {/* Divider */}
+        <div style={{ borderTop: "1px solid #e8e6dc" }} />
 
-      {/* Description */}
-      <div className="mx-5 mb-8">
-        <p style={{ color: "#5e5d59", fontSize: "0.9rem", lineHeight: 1.8 }}>
-          {cat.description}
-        </p>
-      </div>
-
-      {/* MBTI badge */}
-      <div className="flex justify-center mb-8">
-        <div
-          className="font-mono font-bold"
-          style={{
-            padding: "0.5rem 1.75rem",
-            background: "#141413",
-            color: "#faf9f5",
-            borderRadius: "99px",
-            letterSpacing: "0.2em",
-            fontSize: "0.95rem",
-            boxShadow: "0px 0px 0px 1px #30302e",
-          }}
-        >
-          {cat.mbti}
+        {/* Description */}
+        <div>
+          <p style={{ color: "#5e5d59", fontSize: "0.93rem", lineHeight: 1.85 }}>
+            {cat.description}
+          </p>
         </div>
-      </div>
 
-      {/* Buttons */}
-      <div className="mx-5 flex flex-col gap-3">
-        <button
-          onClick={handleShare}
-          className="w-full py-4 rounded-2xl font-bold transition-all active:scale-[0.98]"
-          style={{
-            background: "#c96442",
-            color: "#faf9f5",
-            fontSize: "0.95rem",
-            letterSpacing: "0.1em",
-            boxShadow: "0px 0px 0px 1px #c96442",
-          }}
-        >
-          分享结果
-        </button>
-        <Link
-          href="/quiz"
-          className="w-full py-4 rounded-2xl font-bold text-center transition-all active:scale-[0.98]"
-          style={{
-            background: "#faf9f5",
-            color: "#141413",
-            fontSize: "0.95rem",
-            letterSpacing: "0.1em",
-            border: "2px solid #e8e6dc",
-            boxShadow: "0px 0px 0px 1px #e8e6dc",
-          }}
-        >
-          再测一次
-        </Link>
+        {/* MBTI badge */}
+        <div className="flex justify-center py-2">
+          <div
+            className="font-mono font-bold"
+            style={{
+              padding: "0.6rem 2rem",
+              background: "#141413",
+              color: "#faf9f5",
+              borderRadius: "99px",
+              letterSpacing: "0.25em",
+              fontSize: "0.95rem",
+              boxShadow: "0px 0px 0px 1px #30302e",
+            }}
+          >
+            {cat.mbti}
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-col gap-3 pt-1">
+          <button
+            onClick={handleShare}
+            className="w-full py-[1.1rem] rounded-2xl font-bold transition-all active:scale-[0.98]"
+            style={{
+              background: "#c96442",
+              color: "#faf9f5",
+              fontSize: "1rem",
+              letterSpacing: "0.1em",
+              boxShadow: "0px 0px 0px 1px #c96442",
+            }}
+          >
+            分享结果
+          </button>
+          <Link
+            href="/quiz"
+            className="w-full py-[1.1rem] rounded-2xl font-bold text-center transition-all active:scale-[0.98]"
+            style={{
+              background: "#faf9f5",
+              color: "#141413",
+              fontSize: "1rem",
+              letterSpacing: "0.1em",
+              border: "2px solid #e8e6dc",
+              boxShadow: "0px 0px 0px 1px #e8e6dc",
+            }}
+          >
+            再测一次
+          </Link>
+        </div>
+
       </div>
     </div>
   );
