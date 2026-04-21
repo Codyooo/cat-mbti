@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <body className="min-h-screen bg-white">
+      <body className="min-h-screen" style={{ background: "#f5f4ed" }}>
         <div className="max-w-[480px] mx-auto min-h-screen relative">
           {children}
         </div>

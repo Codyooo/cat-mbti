@@ -19,7 +19,7 @@ export default function QuizPage() {
   const [animating, setAnimating] = useState(false);
 
   const question = questions[current];
-  const progress = ((current) / questions.length) * 100;
+  const progress = ((current + 1) / questions.length) * 100;
   const catType = questionCats[current] || "default";
 
   const handleSelect = useCallback((index: number) => {
@@ -29,105 +29,142 @@ export default function QuizPage() {
 
   const handleNext = useCallback(() => {
     if (selected === null || animating) return;
-
     const newAnswers = { ...answers, [question.id]: selected };
     setAnswers(newAnswers);
     setAnimating(true);
-
     setTimeout(() => {
       if (current + 1 >= questions.length) {
-        const mbti = calculateMBTI(newAnswers);
-        router.push(`/result?type=${mbti}`);
+        router.push(`/result?type=${calculateMBTI(newAnswers)}`);
       } else {
         setCurrent(current + 1);
         setSelected(null);
         setAnimating(false);
       }
-    }, 250);
+    }, 200);
   }, [selected, animating, answers, question.id, current, router]);
 
   const handleBack = useCallback(() => {
-    if (current === 0) {
-      router.push("/");
-      return;
-    }
-    setCurrent(current - 1);
-    setSelected(answers[questions[current - 1].id] ?? null);
+    if (current === 0) { router.push("/"); return; }
+    const prev = current - 1;
+    setCurrent(prev);
+    setSelected(answers[questions[prev].id] ?? null);
   }, [current, router, answers]);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: "#f5f4ed" }}>
       {/* Header */}
-      <div className="flex items-center px-4 py-4 border-b border-gray-100">
+      <div className="flex items-center px-4 pt-5 pb-3">
         <button
           onClick={handleBack}
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 text-lg font-bold hover:bg-gray-200 transition-colors"
+          className="w-9 h-9 flex items-center justify-center rounded-xl transition-colors"
+          style={{
+            background: "#e8e6dc",
+            color: "#5e5d59",
+            fontSize: "1rem",
+            boxShadow: "0px 0px 0px 1px #d1cfc5",
+          }}
         >
           ←
         </button>
-        <div className="flex-1 text-center text-gray-500 text-base font-medium">
+        <div className="flex-1 text-center text-sm font-medium" style={{ color: "#87867f" }}>
           {current + 1} / {questions.length}
         </div>
-        <div className="w-10" />
+        <div className="w-9" />
       </div>
 
       {/* Progress bar */}
-      <div className="w-full h-0.5 bg-gray-100">
+      <div className="mx-4 mb-6" style={{ height: "3px", background: "#e8e6dc", borderRadius: "99px" }}>
         <div
-          className="h-full bg-black transition-all duration-500"
-          style={{ width: `${progress}%` }}
+          style={{
+            height: "100%",
+            width: `${progress}%`,
+            background: "#141413",
+            borderRadius: "99px",
+            transition: "width 0.5s ease",
+          }}
         />
       </div>
 
       {/* Content */}
-      <div className="flex-1 px-5 py-6 flex flex-col">
-        {/* Category tag */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center">
-            <PixelCat type={catType} size={52} />
+      <div className="flex-1 px-5 flex flex-col">
+        {/* Category + cat */}
+        <div className="flex items-center gap-3 mb-5">
+          <div
+            className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: "#faf9f5", boxShadow: "0px 0px 0px 1px #f0eee6" }}
+          >
+            <PixelCat type={catType} size={44} />
           </div>
-          <span className="text-gray-400 text-sm">{question.category}</span>
+          <span style={{ color: "#87867f", fontSize: "0.85rem" }}>{question.category}</span>
         </div>
 
         {/* Question */}
-        <h2 className="text-[22px] font-bold text-black leading-snug mb-8 fade-in-up">
+        <h2
+          className="font-bold leading-snug mb-6 fade-in-up"
+          style={{ fontSize: "1.2rem", color: "#141413", lineHeight: 1.45 }}
+        >
           {question.question}
         </h2>
 
         {/* Answers */}
-        <div className="flex flex-col gap-3 flex-1">
-          {question.answers.map((answer, index) => (
-            <button
-              key={index}
-              onClick={() => handleSelect(index)}
-              className={`w-full text-left px-5 py-4 rounded-2xl border-2 transition-all duration-150 text-base leading-relaxed
-                ${selected === index
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-black border-gray-200 hover:border-gray-400"
-                }`}
-            >
-              <span className={`font-bold mr-3 ${selected === index ? "text-gray-300" : "text-gray-400"}`}>
-                {String.fromCharCode(65 + index)}
-              </span>
-              {answer.text}
-            </button>
-          ))}
+        <div className="flex flex-col gap-3">
+          {question.answers.map((answer, index) => {
+            const isSelected = selected === index;
+            return (
+              <button
+                key={index}
+                onClick={() => handleSelect(index)}
+                className="w-full text-left rounded-2xl transition-all duration-150"
+                style={{
+                  background: isSelected ? "#141413" : "#faf9f5",
+                  border: `2px solid ${isSelected ? "#141413" : "#f0eee6"}`,
+                  boxShadow: isSelected ? "none" : "0px 0px 0px 1px #f0eee6",
+                }}
+              >
+                <div className="flex items-start px-4 py-4 gap-3">
+                  <span
+                    className="text-sm font-bold flex-shrink-0 mt-0.5"
+                    style={{
+                      width: "1.25rem",
+                      color: isSelected ? "rgba(255,255,255,0.4)" : "#b0aea5",
+                    }}
+                  >
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "0.95rem",
+                      lineHeight: 1.6,
+                      color: isSelected ? "#faf9f5" : "#141413",
+                      flex: 1,
+                    }}
+                  >
+                    {answer.text}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Next button */}
-        <div className="mt-6">
-          <button
-            onClick={handleNext}
-            disabled={selected === null}
-            className={`w-full py-4 rounded-full text-lg font-bold tracking-widest transition-all duration-150
-              ${selected !== null
-                ? "bg-black text-white hover:bg-gray-800 active:scale-95"
-                : "bg-gray-100 text-gray-400 cursor-not-allowed"
-              }`}
-          >
-            继续 →
-          </button>
-        </div>
+      {/* Continue button */}
+      <div className="px-5 py-5">
+        <button
+          onClick={handleNext}
+          disabled={selected === null}
+          className="w-full py-4 rounded-2xl font-bold transition-all duration-150 active:scale-[0.98]"
+          style={{
+            background: selected !== null ? "#141413" : "#e8e6dc",
+            color: selected !== null ? "#faf9f5" : "#b0aea5",
+            fontSize: "0.95rem",
+            letterSpacing: "0.12em",
+            cursor: selected !== null ? "pointer" : "not-allowed",
+            boxShadow: selected !== null ? "0px 0px 0px 1px #30302e" : "none",
+          }}
+        >
+          继续 →
+        </button>
       </div>
     </div>
   );
