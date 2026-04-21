@@ -12,32 +12,44 @@ const catTypes = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-6 py-10">
+    <div
+      className="min-h-screen flex flex-col items-center px-6 py-10"
+      style={{ background: "#f5f4ed" }}
+    >
       {/* Title */}
       <div className="mb-8 mt-4">
         <h1
-          className="text-5xl font-black tracking-[0.15em] text-black text-center"
-          style={{ fontFamily: "'Courier New', Courier, monospace", letterSpacing: "0.2em" }}
+          className="text-center"
+          style={{
+            fontFamily: "'Courier New', Courier, monospace",
+            fontSize: "2.6rem",
+            fontWeight: 900,
+            letterSpacing: "0.25em",
+            color: "#141413",
+          }}
         >
           CATMBTI
         </h1>
       </div>
 
       {/* Cat Grid */}
-      <div className="grid grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-4 gap-3 mb-10">
         {catTypes.map((type) => (
           <div key={type} className="cat-grid-item flex items-center justify-center">
-            <PixelCat type={type} size={80} />
+            <PixelCat type={type} size={76} />
           </div>
         ))}
       </div>
 
       {/* Tagline */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-black text-black mb-2">
+      <div className="text-center mb-10">
+        <h2
+          className="mb-2 font-black"
+          style={{ fontSize: "1.35rem", color: "#141413" }}
+        >
           重生之我变成了一只猫
         </h2>
-        <p className="text-gray-500 text-base">
+        <p style={{ color: "#87867f", fontSize: "0.95rem" }}>
           &ldquo;这一次，我要活出自己的猫生&rdquo;
         </p>
       </div>
@@ -45,10 +57,18 @@ export default function Home() {
       {/* Start Button */}
       <Link
         href="/quiz"
-        className="w-full max-w-sm flex items-center justify-center gap-3 bg-black text-white text-lg font-bold py-4 rounded-full transition-all active:scale-95 hover:bg-gray-800"
+        className="w-full max-w-sm flex items-center justify-center gap-3 py-4 rounded-2xl transition-all active:scale-[0.98]"
+        style={{
+          background: "#141413",
+          color: "#faf9f5",
+          fontWeight: 700,
+          fontSize: "1rem",
+          letterSpacing: "0.15em",
+          boxShadow: "0px 0px 0px 1px #30302e",
+        }}
       >
-        <span className="text-xl">▶</span>
-        <span className="tracking-widest">开 始 测 试</span>
+        <span style={{ fontSize: "1rem" }}>▶</span>
+        <span>开 始 测 试</span>
       </Link>
     </div>
   );
