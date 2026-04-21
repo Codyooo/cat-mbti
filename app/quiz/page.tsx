@@ -51,9 +51,9 @@ export default function QuizPage() {
   }, [current, router, answers]);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#f5f4ed" }}>
+    <div className="flex flex-col" style={{ background: "#f5f4ed", minHeight: "100dvh" }}>
       {/* Header */}
-      <div className="flex items-center px-4 pt-5 pb-3">
+      <div className="flex items-center px-4 pt-5 pb-3 flex-shrink-0">
         <button
           onClick={handleBack}
           className="w-9 h-9 flex items-center justify-center rounded-xl transition-colors"
@@ -73,7 +73,7 @@ export default function QuizPage() {
       </div>
 
       {/* Progress bar */}
-      <div className="mx-4 mb-6" style={{ height: "3px", background: "#e8e6dc", borderRadius: "99px" }}>
+      <div className="mx-4 mb-5 flex-shrink-0" style={{ height: "3px", background: "#e8e6dc", borderRadius: "99px" }}>
         <div
           style={{
             height: "100%",
@@ -85,29 +85,29 @@ export default function QuizPage() {
         />
       </div>
 
-      {/* Content */}
-      <div className="flex-1 px-5 flex flex-col">
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto px-4 pb-4">
         {/* Category + cat */}
-        <div className="flex items-center gap-3 mb-5">
+        <div className="flex items-center gap-3 mb-4">
           <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+            className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
             style={{ background: "#faf9f5", boxShadow: "0px 0px 0px 1px #f0eee6" }}
           >
-            <PixelCat type={catType} size={44} />
+            <PixelCat type={catType} size={40} />
           </div>
-          <span style={{ color: "#87867f", fontSize: "0.85rem" }}>{question.category}</span>
+          <span style={{ color: "#87867f", fontSize: "0.82rem" }}>{question.category}</span>
         </div>
 
         {/* Question */}
         <h2
-          className="font-bold leading-snug mb-6 fade-in-up"
-          style={{ fontSize: "1.2rem", color: "#141413", lineHeight: 1.45 }}
+          className="font-bold fade-in-up mb-5"
+          style={{ fontSize: "1.15rem", color: "#141413", lineHeight: 1.5 }}
         >
           {question.question}
         </h2>
 
         {/* Answers */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
           {question.answers.map((answer, index) => {
             const isSelected = selected === index;
             return (
@@ -121,7 +121,7 @@ export default function QuizPage() {
                   boxShadow: isSelected ? "none" : "0px 0px 0px 1px #f0eee6",
                 }}
               >
-                <div className="flex items-start px-4 py-4 gap-3">
+                <div className="flex items-start px-4 py-3.5 gap-3">
                   <span
                     className="text-sm font-bold flex-shrink-0 mt-0.5"
                     style={{
@@ -133,7 +133,7 @@ export default function QuizPage() {
                   </span>
                   <span
                     style={{
-                      fontSize: "0.95rem",
+                      fontSize: "0.92rem",
                       lineHeight: 1.6,
                       color: isSelected ? "#faf9f5" : "#141413",
                       flex: 1,
@@ -148,8 +148,14 @@ export default function QuizPage() {
         </div>
       </div>
 
-      {/* Continue button */}
-      <div className="px-5 py-5">
+      {/* Continue button — fixed at bottom */}
+      <div
+        className="flex-shrink-0 px-4 py-4"
+        style={{
+          background: "#f5f4ed",
+          borderTop: "1px solid #e8e6dc",
+        }}
+      >
         <button
           onClick={handleNext}
           disabled={selected === null}
